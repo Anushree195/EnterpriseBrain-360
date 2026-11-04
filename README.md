@@ -1,18 +1,34 @@
-\# EnterpriseBrain 360
+\# 🧠 EnterpriseBrain 360
 
 \### AI-Powered Enterprise Knowledge \& Customer Intelligence Platform
 
 
 
-EnterpriseBrain 360 is an AI-powered enterprise intelligence platform designed to unify enterprise knowledge retrieval, customer relationship data, and intelligent support workflows.
+<div align="center">
 
 
 
-The platform aims to help support teams retrieve relevant information from enterprise documents, understand customer context, and generate context-aware responses using Retrieval-Augmented Generation (RAG).
+!\[Python](https://img.shields.io/badge/Python-3.13-3776AB?style=for-the-badge\&logo=python\&logoColor=white)
+
+!\[FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?style=for-the-badge\&logo=fastapi\&logoColor=white)
+
+!\[PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=for-the-badge\&logo=postgresql\&logoColor=white)
+
+!\[AI](https://img.shields.io/badge/AI-RAG-8B5CF6?style=for-the-badge)
+
+!\[Status](https://img.shields.io/badge/Status-Under\_Development-orange?style=for-the-badge)
 
 
 
-\*\*Project Status:\*\* 🚧 Actively Under Development
+\*\*Connecting Enterprise Knowledge with Customer Intelligence.\*\*
+
+
+
+\[Overview](#-overview) • \[Architecture](#-system-architecture) • \[Features](#-implemented-features) • \[Tech Stack](#-technology-stack) • \[Setup](#-getting-started) • \[Roadmap](#-development-roadmap)
+
+
+
+</div>
 
 
 
@@ -20,127 +36,145 @@ The platform aims to help support teams retrieve relevant information from enter
 
 
 
-\## Project Overview
+\## 🚀 Overview
 
 
 
-EnterpriseBrain 360 combines two important capabilities:
+\*\*EnterpriseBrain 360\*\* is an AI-powered enterprise intelligence platform designed to unify enterprise knowledge retrieval, customer relationship data, and intelligent support workflows.
 
 
 
-\- \*\*Enterprise Knowledge Hub:\*\* Processes enterprise documents, extracts information, generates embeddings, and enables semantic knowledge retrieval.
-
-\- \*\*Customer 360:\*\* Consolidates customer profiles, support tickets, and interaction history into a unified customer view.
+Modern organizations manage information across documents, customer databases, support tickets, and interaction histories. Finding the right information and understanding customer context across these systems can be challenging.
 
 
 
-The planned AI Copilot will combine these capabilities to provide context-aware assistance to enterprise support teams.
+EnterpriseBrain 360 aims to address this by bringing enterprise knowledge and customer intelligence into one unified platform.
 
 
 
-\## Architecture
+The platform combines:
 
 
 
-```text
+\- 📚 \*\*Enterprise Knowledge Hub\*\* — Document ingestion, PDF text extraction, text chunking, embeddings, and semantic knowledge retrieval.
 
-&#x20;                EnterpriseBrain 360
+\- 👥 \*\*Customer 360\*\* — Centralized customer profiles, support tickets, and interaction histories.
 
-&#x20;                        |
+\- 🤖 \*\*AI Copilot\*\* — Planned context-aware assistance combining customer information with relevant enterprise knowledge.
 
-&#x20;                 React Frontend
+\- ⚙️ \*\*Intelligent Support Workflows\*\* — Planned ticket classification, priority recommendations, and resolution assistance.
 
-&#x20;                        |
 
-&#x20;                  FastAPI Backend
 
-&#x20;                        |
+> 🚧 \*\*Project Status:\*\* Actively under development. Customer 360 backend APIs and the initial document-processing and embedding pipeline have been implemented. RAG integration and the AI Copilot are upcoming.
 
-&#x20;         +--------------+--------------+
 
-&#x20;         |              |              |
 
-&#x20;     Customer 360   Knowledge Hub   Workflow Engine
+\---
 
-&#x20;         |              |              |
 
-&#x20;     PostgreSQL     PDF Processing   Support Logic
 
-&#x20;                        |
+\## 🏗️ System Architecture
 
-&#x20;                 Text Chunking
 
-&#x20;                        |
 
-&#x20;                 BGE Embeddings
+The platform follows a modular architecture with separate components for customer data, enterprise knowledge processing, and intelligent support workflows.
 
-&#x20;                        |
 
-&#x20;                     ChromaDB
 
-&#x20;                        |
+```mermaid
 
-&#x20;                 Semantic Retrieval
+flowchart TD
 
-&#x20;                        |
+&#x20;   A\["React Frontend"] --> B\["FastAPI Backend"]
 
-&#x20;                Context Assembly
 
-&#x20;                        |
 
-&#x20;                 Ollama LLM
+&#x20;   B --> C\["Customer 360 Module"]
 
-&#x20;                        |
+&#x20;   B --> D\["Enterprise Knowledge Hub"]
 
-&#x20;                   AI Copilot
+&#x20;   B --> E\["Workflow Engine"]
+
+
+
+&#x20;   C --> F\[("PostgreSQL")]
+
+&#x20;   D --> G\["PDF Processing"]
+
+&#x20;   G --> H\["Text Extraction \& Chunking"]
+
+&#x20;   H --> I\["BGE Embeddings"]
+
+&#x20;   I --> J\[("ChromaDB - Planned")]
+
+
+
+&#x20;   F --> K\["Context Assembly - Planned"]
+
+&#x20;   J --> K
+
+
+
+&#x20;   K --> L\["Ollama LLM"]
+
+&#x20;   L --> M\["AI Copilot"]
+
+
+
+&#x20;   style A fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
+
+&#x20;   style B fill:#ccfbf1,stroke:#0d9488,color:#134e4a
+
+&#x20;   style C fill:#fef3c7,stroke:#d97706,color:#78350f
+
+&#x20;   style D fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+
+&#x20;   style J fill:#f3e8ff,stroke:#9333ea,color:#581c87
+
+&#x20;   style M fill:#dcfce7,stroke:#16a34a,color:#14532d
 
 ```
 
 
 
-\*Note: This represents the planned overall architecture. Some components are still under development.\*
+\*The diagram represents the target architecture. Components marked as planned have not yet been implemented.\*
 
 
 
-\## Technology Stack
+\### 🔄 How the Platform Will Work
 
 
 
-| Category | Technologies |
+1\. \*\*Document Ingestion:\*\* Upload enterprise PDF documents through the Knowledge Hub.
 
-|---|---|
+2\. \*\*Text Processing:\*\* Extract, clean, and divide document content into overlapping chunks.
 
-| Backend | Python, FastAPI |
+3\. \*\*Embedding Generation:\*\* Convert text chunks into numerical vectors using a local embedding model.
 
-| Frontend | React.js |
+4\. \*\*Knowledge Retrieval:\*\* Store embeddings in ChromaDB and retrieve relevant information using semantic similarity search.
 
-| Database | PostgreSQL |
+5\. \*\*Customer Context:\*\* Retrieve customer profiles, support tickets, and interaction history from PostgreSQL.
 
-| Vector Database | ChromaDB (planned) |
+6\. \*\*Context Assembly:\*\* Combine relevant customer information and enterprise knowledge.
 
-| Embeddings | FastEmbed, BGE-small |
-
-| LLM Runtime | Ollama, Llama 3.2:1b |
-
-| PDF Processing | PyMuPDF |
-
-| RAG Orchestration | LangChain (planned) |
-
-| Testing | Pytest (planned) |
-
-| Version Control | Git, GitHub |
+7\. \*\*AI Response:\*\* Use a locally hosted LLM to generate context-aware support responses with source references.
 
 
 
-\## Implemented Features
+\---
 
 
 
-\### 1. Customer 360 Backend
+\## ✨ Implemented Features
 
 
 
-\- Developed REST APIs using FastAPI and Pydantic.
+\### 👥 1. Customer 360 Backend
+
+
+
+\- Developed RESTful APIs using FastAPI and Pydantic.
 
 \- Implemented customer creation, retrieval, updating, and deletion.
 
@@ -148,31 +182,95 @@ The planned AI Copilot will combine these capabilities to provide context-aware 
 
 \- Implemented customer interaction history management.
 
-\- Designed relational PostgreSQL tables with foreign-key constraints.
+\- Designed relational PostgreSQL tables with primary keys, foreign keys, and data constraints.
 
-\- Developed a consolidated Customer 360 profile endpoint combining customer details, tickets, and interactions.
-
-
-
-\### 2. Enterprise Knowledge Hub
+\- Developed a consolidated Customer 360 profile endpoint combining customer details, support tickets, and interactions.
 
 
 
-\- Implemented a PDF upload API with file validation.
-
-\- Extracted PDF text page by page using PyMuPDF.
-
-\- Added text cleaning and normalization.
-
-\- Implemented overlapping text chunking.
-
-\- Preserved source filename and page-number metadata for future document citations.
-
-\- Generated 384-dimensional embeddings locally using FastEmbed and BGE-small.
+\### 📚 2. Enterprise Knowledge Hub
 
 
 
-\## Project Structure
+\- Developed a PDF upload API with file type, content type, file size, and PDF signature validation.
+
+\- Implemented page-wise PDF text extraction using PyMuPDF.
+
+\- Added text cleaning and whitespace normalization.
+
+\- Implemented overlapping text chunking with word-boundary adjustments.
+
+\- Preserved document source, chunk ID, and page-number metadata for future citation support.
+
+\- Integrated FastEmbed with the BGE-small embedding model for local embedding generation.
+
+\- Generated 384-dimensional embedding vectors for document chunks.
+
+
+
+\---
+
+
+
+\## 🛠️ Technology Stack
+
+
+
+| Category | Technologies |
+
+|---|---|
+
+| Programming Language | Python |
+
+| Backend Framework | FastAPI, Pydantic |
+
+| Frontend | React.js (planned) |
+
+| Relational Database | PostgreSQL |
+
+| Vector Database | ChromaDB (planned) |
+
+| Embedding Model | BGE-small, FastEmbed |
+
+| LLM Runtime | Ollama, Llama 3.2:1b |
+
+| Document Processing | PyMuPDF |
+
+| RAG Framework | LangChain (planned) |
+
+| Testing | Pytest (planned) |
+
+| API Testing | FastAPI Swagger UI |
+
+| Version Control | Git, GitHub |
+
+
+
+\### 🧠 AI and Retrieval Components
+
+
+
+| Component | Purpose |
+
+|---|---|
+
+| BGE-small | Generates semantic embeddings from text |
+
+| FastEmbed | Runs embedding generation locally |
+
+| ChromaDB | Planned vector storage and similarity search |
+
+| Ollama | Local LLM execution |
+
+| Llama 3.2:1b | Planned context-aware response generation |
+
+
+
+\---
+
+
+
+\## 📂 Project Structure
 
 
 
@@ -218,11 +316,7 @@ EnterpriseBrain-360/
 
 │   ├── test\_chunking.py
 
-│   ├── test\_embeddings.py
-
-│   │
-
-│   └── .env.example
+│   └── test\_embeddings.py
 
 │
 
@@ -250,15 +344,19 @@ EnterpriseBrain-360/
 
 
 
-\## Local Setup
+\---
 
 
 
-\### Prerequisites
+\## ⚙️ Getting Started
 
 
 
-Install the following:
+\### 📌 Prerequisites
+
+
+
+Make sure the following tools are installed:
 
 
 
@@ -268,9 +366,9 @@ Install the following:
 
 \- Node.js 20+
 
-\- Ollama
-
 \- Git
+
+\- Ollama
 
 
 
@@ -290,7 +388,7 @@ cd EnterpriseBrain-360
 
 
 
-\### 2. Create and Activate a Python Virtual Environment
+\### 2. Create a Virtual Environment
 
 
 
@@ -316,7 +414,7 @@ python -m venv .venv
 
 ```powershell
 
-python -m pip install fastapi uvicorn psycopg\[binary] python-dotenv pymupdf python-multipart fastembed
+python -m pip install fastapi uvicorn "psycopg\[binary]" python-dotenv pymupdf python-multipart fastembed
 
 ```
 
@@ -326,7 +424,7 @@ python -m pip install fastapi uvicorn psycopg\[binary] python-dotenv pymupdf pyt
 
 
 
-Create the project database:
+Create the database:
 
 
 
@@ -338,11 +436,7 @@ CREATE DATABASE enterprisebrain\_db;
 
 
 
-Configure the database connection using a local `.env` file inside `backend/`.
-
-
-
-Example configuration:
+Configure your local database connection in `backend/.env`:
 
 
 
@@ -362,11 +456,47 @@ DB\_PASSWORD=your\_local\_password
 
 
 
-\*\*Security:\*\* Never commit your actual `.env` file or database credentials to GitHub.
+Create the `customers`, `support\_tickets`, and `interactions` tables using the database schema defined for this project.
 
 
 
-\### 5. Start the Backend
+\*\*Security:\*\* Never commit `.env` files, passwords, or private credentials to GitHub.
+
+
+
+\### 5. Install and Configure Ollama
+
+
+
+Install Ollama and download the model:
+
+
+
+```powershell
+
+ollama pull llama3.2:1b
+
+```
+
+
+
+Verify that the model is available:
+
+
+
+```powershell
+
+ollama list
+
+```
+
+
+
+\*Ollama integration with the RAG pipeline is planned.\*
+
+
+
+\### 6. Start the FastAPI Backend
 
 
 
@@ -382,77 +512,95 @@ python -m uvicorn main:app --reload
 
 
 
-Backend URL:
+The backend will be available at:
 
 
 
-```text
-
-http://127.0.0.1:8000
-
-```
+\*\*Application:\*\* http://127.0.0.1:8000
 
 
 
-Interactive API documentation:
+\*\*Interactive API Documentation:\*\* http://127.0.0.1:8000/docs
 
 
 
-```text
-
-http://127.0.0.1:8000/docs
-
-```
+\*\*Health Check:\*\* http://127.0.0.1:8000/health
 
 
 
-\## API Modules
+\---
 
 
 
-| Module | Purpose |
+\## 🔌 API Modules
+
+
+
+| API Module | Functionality |
 
 |---|---|
 
-| `/customers` | Customer management |
+| `/customers` | Customer lifecycle management |
 
 | `/tickets` | Support ticket management |
 
 | `/interactions` | Customer interaction history |
 
-| `/knowledge` | Enterprise document processing |
+| `/knowledge` | Enterprise document upload and processing |
 
 
 
-Use the interactive Swagger documentation at `/docs` to explore and test available endpoints.
+Explore the available endpoints through FastAPI Swagger UI.
 
 
 
-\## Current Development Roadmap
+http://127.0.0.1:8000/docs
+
+
+
+\---
+
+
+
+\## 🗺️ Development Roadmap
+
+
+
+The project is being developed incrementally.
 
 
 
 \- \[x] Project foundation and architecture
 
+\- \[x] FastAPI backend initialization
+
+\- \[x] PostgreSQL database integration
+
 \- \[x] Customer 360 backend APIs
+
+\- \[x] Support ticket and interaction management
 
 \- \[x] PDF upload and validation
 
 \- \[x] PDF text extraction and cleaning
 
-\- \[x] Text chunking with metadata
+\- \[x] Overlapping text chunking
 
-\- \[x] Local embedding generation
+\- \[x] Local embedding generation using BGE-small
 
 \- \[ ] ChromaDB vector storage
 
-\- \[ ] Semantic similarity search and retrieval
+\- \[ ] Semantic similarity search
 
-\- \[ ] RAG pipeline with source citations
+\- \[ ] RAG pipeline implementation
 
-\- \[ ] Context-aware AI Copilot
+\- \[ ] Source-grounded AI responses and citations
 
-\- \[ ] Intelligent ticket classification and priority recommendations
+\- \[ ] Customer-context integration with RAG
+
+\- \[ ] AI Copilot implementation
+
+\- \[ ] Intelligent support workflows
 
 \- \[ ] React frontend integration
 
@@ -460,31 +608,25 @@ Use the interactive Swagger documentation at `/docs` to explore and test availab
 
 
 
-\## Future Goals
+\---
+
+
+
+\## 🔮 Future Enhancements
 
 
 
 \- Context-aware enterprise support assistance.
 
-\- Retrieval-grounded answers with document citations.
+\- Semantic search across enterprise documents.
 
-\- Customer-specific resolution recommendations.
+\- Retrieval-grounded responses with document citations.
 
-\- Intelligent support ticket workflows.
+\- Customer-specific issue analysis and resolution recommendations.
 
-\- Unified enterprise knowledge and customer intelligence.
+\- Intelligent support ticket classification and prioritization.
 
-
-
-\## Development Approach
-
-
-
-The project follows a modular, API-driven architecture with a local-first AI development approach.
-
-
-
-The MVP uses open-source tools and locally hosted models to minimize dependency on paid AI APIs.
+\- Unified enterprise knowledge and customer intelligence dashboard.
 
 
 
@@ -492,29 +634,27 @@ The MVP uses open-source tools and locally hosted models to minimize dependency 
 
 
 
-\## Author
+\## 💡 Development Approach
 
 
 
-\*\*Anushree Sindagi\*\*
+EnterpriseBrain 360 follows a modular, API-driven development approach.
 
 
 
-B.Tech – Information Technology
+The MVP prioritizes:
 
 
 
-GitHub: https://github.com/Anushree195
+\- Local-first AI development.
 
+\- Open-source technologies.
 
+\- Structured customer data management.
 
-LinkedIn: https://www.linkedin.com/in/anushree-sindagi-842675259/
+\- Reusable document-processing components.
 
+\- Grounded responses using enterprise knowledge.
 
-
-\---
-
-
-
-\*EnterpriseBrain 360 — Connecting Enterprise Knowledge with Customer Intelligence.\*
+\- Secure handling of
 
