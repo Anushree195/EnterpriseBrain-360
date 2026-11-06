@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from ticket import router as ticket_router
 from interaction import router as interaction_router
 from knowledge.router import router as knowledge_router
+from copilot.router import router as copilot_router
 
 from customer import router as customer_router
 
@@ -36,3 +37,4 @@ app.include_router(ticket_router)
 app.include_router(interaction_router)
 # Register Enterprise Knowledge Hub APIs
 app.include_router(knowledge_router)
+app.include_router(copilot_router)

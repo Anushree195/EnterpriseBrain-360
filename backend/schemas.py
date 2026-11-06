@@ -101,3 +101,18 @@ class Customer360Profile(BaseModel):
     tickets: list[TicketResponse]
     interactions: list[InteractionResponse]
 
+class CopilotRequest(BaseModel):
+    customer_id: int = Field(gt=0)
+    question: str = Field(
+        min_length=3,
+        max_length=1000
+    )
+
+
+class CopilotResponse(BaseModel):
+    customer_id: int
+    question: str
+    answer: str
+    knowledge_status: str
+    sources: list[dict]
+

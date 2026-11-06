@@ -21,3 +21,7 @@ build/
 # Uploaded documents and local data
 data/documents/*
 !data/documents/.gitkeep
+
+
+# ChromaDB local vector storage
+data/chroma_db/
