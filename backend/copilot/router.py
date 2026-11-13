@@ -25,23 +25,26 @@ router = APIRouter(
 def ask_copilot(request: CopilotRequest):
 
     try:
-        # Step 1: Retrieve customer information
-        customer_context = get_customer_context(
-            request.customer_id
-        )
+        # Step 1: Retrieve customer context only when a customer is selected
+        customer_context = None
 
-        if customer_context is None:
-            raise HTTPException(
-                status_code=404,
-                detail="Customer not found."
+        if request.customer_id is not None:
+            customer_context = get_customer_context(
+                request.customer_id
             )
+
+            if customer_context is None:
+                raise HTTPException(
+                    status_code=404,
+                    detail="Customer not found."
+                )
 
         # Step 2: Retrieve enterprise knowledge
         knowledge_context = get_knowledge_context(
             request.question
         )
 
-        # Step 3: Build combined prompt
+        # Step 3: Build the appropriate prompt
         prompt = build_copilot_prompt(
             customer_context=customer_context,
             knowledge_context=knowledge_context,

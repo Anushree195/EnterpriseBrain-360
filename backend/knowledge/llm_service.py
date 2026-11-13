@@ -65,17 +65,19 @@ def validate_citations(
     sources: list[dict]
 ) -> dict:
     """
-    Validate whether generated citations refer to
-    actual retrieved source numbers and page numbers.
+    Validate citation references and check whether
+    each numbered recommendation contains a citation.
+
+    This validates reference correctness and citation presence.
+    It does not verify semantic support for each claim.
     """
 
-    citation_pattern = r"\[Source\s+(\d+),\s*Page\s+(\d+)\]"
-
-    found_citations = re.findall(
-        citation_pattern,
-        answer,
+    citation_pattern = re.compile(
+        r"\[Source\s+(\d+),\s*Page\s+(\d+)\]",
         flags=re.IGNORECASE
     )
+
+    found_citations = citation_pattern.findall(answer or "")
 
     valid_references = {
         (
@@ -89,18 +91,61 @@ def validate_citations(
     invalid_citations = []
 
     for citation in found_citations:
-
         if citation in valid_references:
             valid_citations.append(citation)
         else:
             invalid_citations.append(citation)
 
+    # Extract numbered recommendations.
+    recommendation_match = re.search(
+        r"Recommended Actions\s*:\s*(.*?)(?="
+        r"Additional Information\s*:|$)",
+        answer or "",
+        flags=re.IGNORECASE | re.DOTALL
+    )
+
+    recommendation_items = []
+
+    if recommendation_match:
+        action_text = recommendation_match.group(1)
+
+        recommendation_items = re.findall(
+            r"(?m)^\s*\d+[.)]\s*(.+?)(?="
+            r"^\s*\d+[.)]\s*|$)",
+            action_text,
+            flags=re.DOTALL
+        )
+
+    uncited_recommendations = []
+
+    for index, item in enumerate(recommendation_items, start=1):
+        if not citation_pattern.search(item):
+            uncited_recommendations.append(index)
+
+    has_citations = bool(found_citations)
+
+    all_citations_valid = (
+        has_citations
+        and not invalid_citations
+    )
+
+    all_recommendations_cited = (
+        bool(recommendation_items)
+        and not uncited_recommendations
+    )
+
+    citation_review_passed = (
+        all_citations_valid
+        and all_recommendations_cited
+    )
+
     return {
-        "has_citations": bool(found_citations),
-        "all_citations_valid": (
-            bool(found_citations)
-            and not invalid_citations
-        ),
+        "has_citations": has_citations,
+        "all_citations_valid": all_citations_valid,
         "valid_citations": valid_citations,
-        "invalid_citations": invalid_citations
+        "invalid_citations": invalid_citations,
+        "total_recommendations": len(recommendation_items),
+        "uncited_recommendations": uncited_recommendations,
+        "all_recommendations_cited": all_recommendations_cited,
+        "citation_review_passed": citation_review_passed
     }

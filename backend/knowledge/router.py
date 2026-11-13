@@ -309,3 +309,29 @@ def ask_knowledge(request: AskRequest):
             status_code=500,
             detail=f"Question answering failed: {str(error)}"
         ) from error
+# --------------------------------------------------
+# KNOWLEDGE HUB DASHBOARD STATISTICS
+# --------------------------------------------------
+
+@router.get("/stats")
+def get_knowledge_stats():
+    try:
+        DOCUMENTS_DIR.mkdir(parents=True, exist_ok=True)
+
+        document_count = len(
+            list(DOCUMENTS_DIR.glob("*.pdf"))
+        )
+
+        chunk_count = get_collection_count()
+
+        return {
+            "total_documents": document_count,
+            "total_chunks": chunk_count,
+            "status": "success"
+        }
+
+    except Exception as error:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to retrieve knowledge statistics: {str(error)}"
+        ) from error

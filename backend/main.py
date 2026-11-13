@@ -1,9 +1,12 @@
+
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 from ticket import router as ticket_router
 from interaction import router as interaction_router
 from knowledge.router import router as knowledge_router
 from copilot.router import router as copilot_router
-
+from workflows.router import router as workflow_router
 from customer import router as customer_router
 
 
@@ -11,6 +14,19 @@ app = FastAPI(
     title="EnterpriseBrain 360",
     description="AI-Powered Enterprise Knowledge & Customer Intelligence Platform",
     version="1.0.0"
+)
+
+
+# Allow the React frontend to communicate with FastAPI
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173"
+    ],
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["*"],
 )
 
 
@@ -35,6 +51,8 @@ def health_check():
 app.include_router(customer_router)
 app.include_router(ticket_router)
 app.include_router(interaction_router)
+
 # Register Enterprise Knowledge Hub APIs
 app.include_router(knowledge_router)
 app.include_router(copilot_router)
+app.include_router(workflow_router)

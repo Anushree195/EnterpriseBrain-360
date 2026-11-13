@@ -1,6 +1,13 @@
-from pydantic import BaseModel, EmailStr, ConfigDict
-from datetime import datetime
 
+from datetime import datetime
+from typing import Literal
+
+from pydantic import BaseModel, EmailStr, ConfigDict, Field
+
+
+# ==========================================
+# CUSTOMER SCHEMAS
+# ==========================================
 
 class CustomerCreate(BaseModel):
     name: str
@@ -24,31 +31,49 @@ class CustomerResponse(BaseModel):
     created_at: datetime
 
 
+# ==========================================
+# SUPPORT TICKET SCHEMAS
+# ==========================================
 
-
-from typing import Literal
-from pydantic import BaseModel, Field
-from datetime import datetime
-
-
-# Data required to create a ticket
 class TicketCreate(BaseModel):
     customer_id: int = Field(gt=0)
     subject: str = Field(min_length=3, max_length=200)
     description: str = Field(min_length=5)
-    status: Literal["open", "in_progress", "resolved", "closed"] = "open"
-    priority: Literal["low", "medium", "high", "urgent"] = "medium"
+
+    status: Literal[
+        "open",
+        "in_progress",
+        "resolved",
+        "closed"
+    ] = "open"
+
+    priority: Literal[
+        "low",
+        "medium",
+        "high",
+        "urgent"
+    ] = "medium"
 
 
-# Data allowed when updating a ticket
 class TicketUpdate(BaseModel):
     subject: str | None = None
     description: str | None = None
-    status: Literal["open", "in_progress", "resolved", "closed"] | None = None
-    priority: Literal["low", "medium", "high", "urgent"] | None = None
+
+    status: Literal[
+        "open",
+        "in_progress",
+        "resolved",
+        "closed"
+    ] | None = None
+
+    priority: Literal[
+        "low",
+        "medium",
+        "high",
+        "urgent"
+    ] | None = None
 
 
-# Data returned by the API
 class TicketResponse(BaseModel):
     ticket_id: int
     customer_id: int
@@ -59,13 +84,10 @@ class TicketResponse(BaseModel):
     created_at: datetime
 
 
+# ==========================================
+# CUSTOMER INTERACTION SCHEMAS
+# ==========================================
 
-
-
-from typing import Literal
-
-
-# Data required to create an interaction
 class InteractionCreate(BaseModel):
     customer_id: int = Field(gt=0)
     ticket_id: int | None = Field(default=None, gt=0)
@@ -81,7 +103,6 @@ class InteractionCreate(BaseModel):
     summary: str = Field(min_length=3)
 
 
-# Data returned by the API
 class InteractionResponse(BaseModel):
     interaction_id: int
     customer_id: int
@@ -90,6 +111,10 @@ class InteractionResponse(BaseModel):
     summary: str
     created_at: datetime
 
+
+# ==========================================
+# CUSTOMER 360 SCHEMA
+# ==========================================
 
 class Customer360Profile(BaseModel):
     customer_id: int
@@ -101,8 +126,16 @@ class Customer360Profile(BaseModel):
     tickets: list[TicketResponse]
     interactions: list[InteractionResponse]
 
+
+# ==========================================
+# AI COPILOT SCHEMAS
+# ==========================================
+
 class CopilotRequest(BaseModel):
-    customer_id: int = Field(gt=0)
+    # Optional for general enterprise knowledge queries.
+    # Required only when customer-specific context is selected.
+    customer_id: int | None = Field(default=None, gt=0)
+
     question: str = Field(
         min_length=3,
         max_length=1000
@@ -110,9 +143,10 @@ class CopilotRequest(BaseModel):
 
 
 class CopilotResponse(BaseModel):
-    customer_id: int
+    # None for general enterprise knowledge queries.
+    customer_id: int | None = None
+
     question: str
     answer: str
     knowledge_status: str
     sources: list[dict]
-
